@@ -17,8 +17,8 @@ Feature 3: Search products.<br>
 Feature 4: Product reviews.<br>
 Feature 5: Shopping Cart & Order History.<br>
 Feature 6: Singapore Address Auto-fill.<br>
-Feature 7: Inventory Synchronisation. <br>
-Feature 8: Currency converter. <br>
+Feature 7: Inventory Synchronisation.<br>
+Feature 8: Currency converter.<br>
 
 ## External APIs[^1] that you would like to use
 
@@ -29,7 +29,7 @@ Describe which external APIs that you would like to use and how you would use th
 2. ExchangeRate-API<br>
    - Purpose: To provide real-time currency conversion for international customers<br>
 3. Shopify API<br>
-   - To simulate inventory management and sync to the web application.<br>
+   - Purpose: To simulate inventory management and sync to the web application.<br>
 
 ## External node modules[^1] that you would like to use
 
