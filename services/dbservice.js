@@ -6,7 +6,7 @@ const review = require("../models/Review.js");
 let db = {
     async connect() {
         try{
-            await mongoose.connect("")
+            await mongoose.connect("mongodb://localhost:27017/ShopSwift")
         }
     }
 }
