@@ -10,4 +10,4 @@ const productSchema = new mongoose.Schema({
   shopifyId: { type: String, unique: true, sparse: true },
 });
 
-Module.exports = mongoose.model("Product", productSchema);
+module.exports = mongoose.model("Product", productSchema);
