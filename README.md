@@ -11,14 +11,25 @@ SwiftShop <br>
 
 ## Key Features
 
-Feature 1:<br>
-
-<br>
+Feature 1: Register, Login & Logout.<br>
+Feature 2: Product Management<br>
+Feature 3: Search products.<br>
+Feature 4: Product reviews.<br>
+Feature 5: Shopping Cart & Order History.<br>
+Feature 6: Singapore Address Auto-fill.<br>
+Feature 7: Inventory Synchronisation. <br>
+Feature 8: Currency converter. <br>
 
 ## External APIs[^1] that you would like to use
 
 Describe which external APIs that you would like to use and how you would use them.<br>
-<br>
+
+1. OneMap API<br>
+   - Purpose: Enhances the checkout experience by automatically populating address details (Street name, building name) when a user enters a Singapore postal code and retrieves the matching address details.<br>
+2. ExchangeRate-API<br>
+   - Purpose: To provide real-time currency conversion for international customers<br>
+3. Shopify API<br>
+   - To simulate inventory management and sync to the web application.<br>
 
 ## External node modules[^1] that you would like to use
 
