@@ -85,4 +85,38 @@ router.delete("/api/product/:id", function (req, res) {
     });
 });
 
+//Feature 3: Search Products
+router.get("/api/product", function (req, res) {
+  try {
+    const query = req.query.q;
+    const products = Product.find({ name: { $regex: query, $options: "i" } });
+    res.status(200).json(products);
+  } catch (error) {
+    res.status(500).json({ error: error.message });
+  }
+});
+
+//Feature 4: Product Reviews
+router.post("/reviews", async (req, res) => {
+  try {
+    const newReview = new Review(req);
+    await newReview.save();
+    res.status(200).json(newReview);
+  } catch (error) {
+    res.status(500).json({ error: error.message });
+  }
+});
+
+router.get("/reviews/:productId", function (req, res) {
+  try {
+    const reviews = Review.find({ product: req.params.productId }).populate(
+      "user",
+      "username"
+    );
+    res.status(200).json(reviews);
+  } catch (error) {
+    res.status(500).json({ error: error.message });
+  }
+});
+
 module.exports = router;
