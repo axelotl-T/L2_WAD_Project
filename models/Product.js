@@ -6,8 +6,8 @@ const productSchema = new mongoose.Schema({
   price: { type: Number, required: true },
   stock: { type: Number, required: true },
   category: String,
-  imageUrl: String,
-  shopifyId: { type: String, unique: true, sparse: true },
+  // imageUrl: String,
+  // shopifyId: { type: String, unique: true, sparse: true },
 });
 
 module.exports = mongoose.model("Product", productSchema);

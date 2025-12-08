@@ -30,7 +30,7 @@ router.get("/api/products", function (req, res) {
 });
 
 //2. Get Single Product By Id
-router.get("/api/products", function (req, res) {
+router.get("/api/products/:id", function (req, res) {
   let id = req.params.id;
   db.getProductById(id)
     .then(function (response) {
@@ -46,11 +46,12 @@ router.post("/api/products", function (req, res) {
   let data = req.body;
   db.addProduct(
     data.name,
+    data.description,
     data.price,
     data.stock,
-    data.category,
-    data.imageUrl,
-    data.shopifyId
+    data.category
+    // data.imageUrl
+    // data.shopifyId
   )
     .then(function (response) {
       res.status(200).json({ message: response });
@@ -74,49 +75,50 @@ router.put("/api/products/:id", function (req, res) {
 });
 
 //5. Delete Product
-router.delete("/api/product/:id", function (req, res) {
-  let value = req.params.value;
-  db.deleteProduct({ name: value })
+router.delete("/api/products/:id", function (req, res) {
+  let id = req.params.id;
+  db.deleteProductById(id)
     .then(function (response) {
       res.status(200).json({ message: response });
     })
     .catch(function (error) {
-      res.status(500).json({ messgae: error.message });
+      res.status(500).json({ message: error.message });
     });
 });
 
 //Feature 3: Search Products
-router.get("/api/product", function (req, res) {
-  try {
-    const query = req.query.q;
-    const products = Product.find({ name: { $regex: query, $options: "i" } });
-    res.status(200).json(products);
-  } catch (error) {
-    res.status(500).json({ error: error.message });
-  }
+router.get("/api/product/search", function (req, res) {
+  let data = req.body;
+  db.searchProducts(data.name)
+    .then(function (response) {
+      res.status(200).json(response);
+    })
+    .catch(function (error) {
+      res.status(500).json({ message: error.message });
+    });
 });
 
-//Feature 4: Product Reviews
-router.post("/reviews", async (req, res) => {
-  try {
-    const newReview = new Review(req);
-    await newReview.save();
-    res.status(200).json(newReview);
-  } catch (error) {
-    res.status(500).json({ error: error.message });
-  }
-});
+// //Feature 4: Product Reviews
+// router.post("/reviews", async (req, res) => {
+//   try {
+//     const newReview = new Review(req);
+//     await newReview.save();
+//     res.status(200).json(newReview);
+//   } catch (error) {
+//     res.status(500).json({ error: error.message });
+//   }
+// });
 
-router.get("/reviews/:productId", function (req, res) {
-  try {
-    const reviews = Review.find({ product: req.params.productId }).populate(
-      "user",
-      "username"
-    );
-    res.status(200).json(reviews);
-  } catch (error) {
-    res.status(500).json({ error: error.message });
-  }
-});
+// router.get("/reviews/:productId", function (req, res) {
+//   try {
+//     const reviews = Review.find({ product: req.params.productId }).populate(
+//       "user",
+//       "username"
+//     );
+//     res.status(200).json(reviews);
+//   } catch (error) {
+//     res.status(500).json({ error: error.message });
+//   }
+// });
 
 module.exports = router;
