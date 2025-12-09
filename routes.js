@@ -87,7 +87,7 @@ router.delete("/api/products/:id", function (req, res) {
 });
 
 //Feature 3: Search Products
-router.get("/api/product/search", function (req, res) {
+router.post("/api/products/search", function (req, res) {
   let data = req.body;
   db.searchProducts(data.name)
     .then(function (response) {
