@@ -4,8 +4,28 @@
     <meta charset="UTF-8" />
     <title>SwiftShop</title>
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
-
     <link rel="stylesheet" href="/css/styles.css" />
+    <style>
+      .hidden {
+        display: none;
+      }
+      .qty-btn {
+        padding: 2px 8px;
+        font-weight: bold;
+        cursor: pointer;
+      }
+      .qty-val {
+        margin: 0 10px;
+        font-weight: bold;
+      }
+      .reviews-container {
+        background: #f9f9f9;
+        padding: 10px;
+        margin-top: 10px;
+        border-radius: 5px;
+        display: none;
+      }
+    </style>
   </head>
   <body>
     <div class="container">
@@ -71,7 +91,6 @@
         >
           + Add Product
         </button>
-
         <div
           id="product-form"
           class="card hidden"
@@ -93,7 +112,6 @@
             Cancel
           </button>
         </div>
-
         <div id="admin-products-list" style="margin-top: 20px"></div>
       </div>
 
@@ -118,6 +136,15 @@
       </div>
 
       <div id="view-cart" class="hidden">
+        <h3>Checkout</h3>
+
+        <div class="card" style="background: #fff3cd; border-color: #ffeeba">
+          <h4>Shipping Information</h4>
+          <p><b>Name:</b> <span id="checkout-name">Loading...</span></p>
+          <p><b>Email:</b> <span id="checkout-email">...</span></p>
+          <p><b>Address:</b> <span id="checkout-address">...</span></p>
+        </div>
+
         <h3>Shopping Cart</h3>
         <div id="cart-items-container"></div>
         <hr />
@@ -125,10 +152,10 @@
           Total (SGD): $<span id="cart-total-sgd">0.00</span>
         </div>
         <div class="card" style="background: #f0f8ff; margin-top: 20px">
-          <h4>Checkout & Currency</h4>
-          <label>Select Currency:</label>
+          <h4>Payment</h4>
+          <label>Currency:</label>
           <select id="currency-select" onchange="updateTotalCurrency()">
-            <option value="SGD">SGD (Singapore Dollar)</option>
+            <option value="SGD">SGD</option>
           </select>
           <h3>
             Final Total: <span id="final-total">0.00</span>
@@ -136,9 +163,9 @@
           </h3>
           <button
             class="btn btn-success"
-            onclick="alert('Checkout Successful! Thank you.')"
+            onclick="alert('Checkout Successful!')"
           >
-            Checkout Now
+            Confirm Payment
           </button>
         </div>
       </div>

@@ -2,7 +2,7 @@ const mongoose = require("mongoose");
 const product = require("../models/Product.js");
 const user = require("../models/User.js");
 const review = require("../models/Review.js");
-const category = require("../models/Category.js"); // <--- NEW IMPORT
+const category = require("../models/Category.js");
 const bcrypt = require("bcryptjs");
 const jwt = require("jsonwebtoken");
 const axios = require("axios");
@@ -14,15 +14,12 @@ let db = {
     try {
       await mongoose.connect("mongodb://localhost:27017/ShopSwift");
       console.log("✅ Database Connected Successfully");
-
-      // <--- NEW: Run Seed Function on Connect --->
       await this.seedCategories();
     } catch (e) {
       console.log("❌ Database Connect Error:", e.message);
     }
   },
 
-  // <--- NEW: Seed Categories --->
   async seedCategories() {
     try {
       const count = await category.countDocuments();
@@ -32,23 +29,20 @@ let db = {
           { name: "Devices" },
           { name: "Clothes" },
         ]);
-        console.log("✅ Categories Seeded: Food, Devices, Clothes");
       }
     } catch (e) {
-      console.log("Error seeding categories:", e.message);
+      console.log(e.message);
     }
   },
 
-  // <--- NEW: Get All Categories --->
   async getAllCategories() {
     return await category.find();
   },
 
-  // --- AUTH ---
+  // --- USER ---
   async registerUser(username, email, password, postalCode) {
     const salt = await bcrypt.genSalt(10);
     const hashedPassword = await bcrypt.hash(password, salt);
-
     let address = { postalCode, streetName: "", building: "" };
     try {
       const res = await axios.get(
@@ -58,10 +52,7 @@ let db = {
         address.streetName = res.data.results[0].ROAD_NAME;
         address.building = res.data.results[0].BUILDING;
       }
-    } catch (e) {
-      console.log("OneMap Error (Ignored):", e.message);
-    }
-
+    } catch (e) {}
     return await user.create({
       username,
       email,
@@ -77,39 +68,54 @@ let db = {
     const isMatch = await bcrypt.compare(password, foundUser.password);
     if (!isMatch) throw new Error("Invalid credentials");
 
+    // Generate Token
     const token = jwt.sign(
       { id: foundUser._id, username: foundUser.username },
       JWT_SECRET,
       { expiresIn: "1h" },
     );
+
+    // NEW: Save token to the user document in MongoDB
+    foundUser.token = token;
+    await foundUser.save();
+
     return { token, user: foundUser };
   },
 
-  // --- PRODUCTS ---
-
-  // <--- UPDATED: Supports optional category filter --->
-  async getAllProducts(categoryFilter) {
-    let query = {};
-    if (categoryFilter && categoryFilter !== "All") {
-      query.category = categoryFilter;
-    }
-    return await product.find(query);
+  // NEW: Logout function (removes token from DB)
+  async logoutUser(id) {
+    return await user.findByIdAndUpdate(id, { token: null });
   },
 
+  // NEW: Check if token matches DB (Optional Security Step)
+  async checkUserToken(id, token) {
+    const u = await user.findById(id);
+    return u && u.token === token;
+  },
+
+  // NEW: Get User by ID (for Checkout)
+  async getUserById(id) {
+    return await user.findById(id).select("-password");
+  },
+
+  // --- PRODUCTS ---
+  async getAllProducts(categoryFilter) {
+    let query = {};
+    if (categoryFilter && categoryFilter !== "All")
+      query.category = categoryFilter;
+    return await product.find(query);
+  },
   async addProduct(data) {
     data.price = parseFloat(data.price);
     data.stock = parseInt(data.stock);
     return await product.create(data);
   },
-
   async updateProductById(id, updates) {
     return await product.findByIdAndUpdate(id, updates, { new: true });
   },
-
   async deleteProductById(id) {
     return await product.findByIdAndDelete(id);
   },
-
   async getProductById(id) {
     return await product.findById(id);
   },
