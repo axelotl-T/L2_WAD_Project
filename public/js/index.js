@@ -344,3 +344,40 @@ function deleteProduct(id) {
     });
   }
 }
+
+// --- CHECKOUT FUNCTION ---
+function checkout() {
+  if (cart.length === 0) {
+    alert("Your cart is empty!");
+    return;
+  }
+
+  if (!confirm("Confirm payment and place order?")) return;
+
+  $.ajax({
+    url: "/api/checkout",
+    method: "POST",
+    headers: { Authorization: "Bearer " + authToken },
+    contentType: "application/json",
+    // Send the entire cart array to the server
+    data: JSON.stringify({ cart: cart }),
+    success: function (response) {
+      alert("Payment Successful! " + response.message);
+
+      // Clear Cart
+      cart = [];
+      updateCartCount();
+      renderCart();
+
+      // Switch back to shop to see updated stock
+      switchView("shop");
+    },
+    error: function (e) {
+      // Show specific error (e.g., "Insufficient stock for Apple")
+      alert(
+        "Checkout Failed: " +
+          (e.responseJSON ? e.responseJSON.error : "Unknown Error"),
+      );
+    },
+  });
+}

@@ -151,23 +151,18 @@
         <div class="total-section">
           Total (SGD): $<span id="cart-total-sgd">0.00</span>
         </div>
-        <div class="card" style="background: #f0f8ff; margin-top: 20px">
-          <h4>Payment</h4>
-          <label>Currency:</label>
-          <select id="currency-select" onchange="updateTotalCurrency()">
-            <option value="SGD">SGD</option>
-          </select>
-          <h3>
-            Final Total: <span id="final-total">0.00</span>
-            <span id="currency-label">SGD</span>
-          </h3>
-          <button
-            class="btn btn-success"
-            onclick="alert('Checkout Successful!')"
-          >
-            Confirm Payment
-          </button>
+        <div class="card" style="background:#f0f8ff; margin-top:20px;">
+            <h4>Payment</h4>
+            <label>Currency:</label>
+            <select id="currency-select" onchange="updateTotalCurrency()">
+                <option value="SGD">SGD</option>
+            </select>
+            <h3>Final Total: <span id="final-total">0.00</span> <span id="currency-label">SGD</span></h3>
+            
+            <button class="btn btn-success" onclick="checkout()">Confirm Payment</button>
         </div>
+    </div>
+</div>
       </div>
     </div>
 

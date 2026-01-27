@@ -154,6 +154,31 @@ let db = {
       return { SGD: 1, USD: 0.74 };
     }
   },
+
+  // --- CHECKOUT LOGIC ---
+  async processCheckout(cartItems) {
+    // Step 1: Check if ALL items have enough stock first
+    for (let item of cartItems) {
+      let productDoc = await product.findById(item.id);
+      if (!productDoc) {
+        throw new Error(`Product '${item.name}' no longer exists.`);
+      }
+      if (productDoc.stock < item.qty) {
+        throw new Error(
+          `Insufficient stock for '${item.name}'. Available: ${productDoc.stock}`,
+        );
+      }
+    }
+
+    // Step 2: If all good, deduct stock
+    for (let item of cartItems) {
+      let productDoc = await product.findById(item.id);
+      productDoc.stock -= item.qty;
+      await productDoc.save();
+    }
+
+    return { message: "Checkout successful, stock updated." };
+  },
 };
 
 module.exports = db;

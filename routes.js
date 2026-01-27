@@ -254,4 +254,21 @@ router.get("/api/rates", function (req, res) {
     });
 });
 
+router.post("/api/checkout", authenticationCheck, function (req, res) {
+  let cart = req.body.cart; // Expecting array of {id, name, price, qty}
+
+  if (!cart || cart.length === 0) {
+    return res.status(400).json({ error: "Cart is empty" });
+  }
+
+  db.processCheckout(cart)
+    .then(function (result) {
+      res.status(200).json(result);
+    })
+    .catch(function (err) {
+      // Return 400 for bad requests (e.g. out of stock)
+      res.status(400).json({ error: err.message });
+    });
+});
+
 module.exports = router;
