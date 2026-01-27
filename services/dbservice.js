@@ -2,95 +2,152 @@ const mongoose = require("mongoose");
 const product = require("../models/Product.js");
 const user = require("../models/User.js");
 const review = require("../models/Review.js");
+const category = require("../models/Category.js"); // <--- NEW IMPORT
+const bcrypt = require("bcryptjs");
+const jwt = require("jsonwebtoken");
+const axios = require("axios");
+
+const JWT_SECRET = "secret_key_wad_project";
 
 let db = {
   async connect() {
     try {
       await mongoose.connect("mongodb://localhost:27017/ShopSwift");
-      return "Connect to Mongo DB";
+      console.log("✅ Database Connected Successfully");
+
+      // <--- NEW: Run Seed Function on Connect --->
+      await this.seedCategories();
     } catch (e) {
-      console.log(e.message);
-      throw new Error("Error connecting to Mongo DB");
+      console.log("❌ Database Connect Error:", e.message);
     }
   },
-  async getAllProducts() {
+
+  // <--- NEW: Seed Categories --->
+  async seedCategories() {
     try {
-      let results = await product.find();
-      return results;
+      const count = await category.countDocuments();
+      if (count === 0) {
+        await category.insertMany([
+          { name: "Food" },
+          { name: "Devices" },
+          { name: "Clothes" },
+        ]);
+        console.log("✅ Categories Seeded: Food, Devices, Clothes");
+      }
     } catch (e) {
-      console.log(e.message);
-      throw new Error("Error retrieving products.");
+      console.log("Error seeding categories:", e.message);
     }
   },
-  async getProductById(id) {
+
+  // <--- NEW: Get All Categories --->
+  async getAllCategories() {
+    return await category.find();
+  },
+
+  // --- AUTH ---
+  async registerUser(username, email, password, postalCode) {
+    const salt = await bcrypt.genSalt(10);
+    const hashedPassword = await bcrypt.hash(password, salt);
+
+    let address = { postalCode, streetName: "", building: "" };
     try {
-      let results = await product.findById(id);
-      return results;
+      const res = await axios.get(
+        `https://www.onemap.gov.sg/api/common/elastic/search?searchVal=${postalCode}&returnGeom=N&getAddrDetails=Y`,
+      );
+      if (res.data.results && res.data.results.length > 0) {
+        address.streetName = res.data.results[0].ROAD_NAME;
+        address.building = res.data.results[0].BUILDING;
+      }
     } catch (e) {
-      console.log(e.message);
-      throw new Error("Error retrieving product.");
+      console.log("OneMap Error (Ignored):", e.message);
     }
+
+    return await user.create({
+      username,
+      email,
+      password: hashedPassword,
+      address,
+    });
   },
-  async addProduct(name, description, price, stock, category) {
-    try {
-      await product.create({
-        name: name,
-        description: description,
-        price: price,
-        stock: stock,
-        category: category,
-        // imageUrl: imageUrl,
-      });
-    } catch (e) {
-      console.log(e.message);
-      throw new Error(`Product name: ${name} was not added.`);
+
+  async loginUser(email, password) {
+    const foundUser = await user.findOne({ email });
+    if (!foundUser) throw new Error("User not found");
+
+    const isMatch = await bcrypt.compare(password, foundUser.password);
+    if (!isMatch) throw new Error("Invalid credentials");
+
+    const token = jwt.sign(
+      { id: foundUser._id, username: foundUser.username },
+      JWT_SECRET,
+      { expiresIn: "1h" },
+    );
+    return { token, user: foundUser };
+  },
+
+  // --- PRODUCTS ---
+
+  // <--- UPDATED: Supports optional category filter --->
+  async getAllProducts(categoryFilter) {
+    let query = {};
+    if (categoryFilter && categoryFilter !== "All") {
+      query.category = categoryFilter;
     }
+    return await product.find(query);
   },
+
+  async addProduct(data) {
+    data.price = parseFloat(data.price);
+    data.stock = parseInt(data.stock);
+    return await product.create(data);
+  },
+
   async updateProductById(id, updates) {
-    try {
-      let result = await product.findByIdAndUpdate(id, updates);
-      if (!result) return "Unable to find record to update.";
-      else return "Record is updated!";
-    } catch (e) {
-      console.log(e.message);
-      throw new Error("Error updating event");
-    }
+    return await product.findByIdAndUpdate(id, updates, { new: true });
   },
+
   async deleteProductById(id) {
+    return await product.findByIdAndDelete(id);
+  },
+
+  async getProductById(id) {
+    return await product.findById(id);
+  },
+
+  // --- REVIEWS ---
+  async addReview(rating, comment, userId, productId) {
+    return await review.create({
+      rating,
+      comment,
+      user: userId,
+      product: productId,
+    });
+  },
+  async getReviewsByProductId(productId) {
+    return await review
+      .find({ product: productId })
+      .populate("user", "username");
+  },
+  async updateReview(id, comment, rating) {
+    return await review.findByIdAndUpdate(
+      id,
+      { comment, rating },
+      { new: true },
+    );
+  },
+  async deleteReview(id) {
+    return await review.findByIdAndDelete(id);
+  },
+
+  // --- RATES ---
+  async getExchangeRates() {
     try {
-      let result = await product.findByIdAndDelete(id);
-      if (!result) return "Unable to find a record to delete.";
-      else return "Record is deleted!";
+      const response = await axios.get("https://open.er-api.com/v6/latest/SGD");
+      return response.data.rates;
     } catch (e) {
-      console.log(e.message);
-      throw new Error("Error deleting event");
+      return { SGD: 1, USD: 0.74 };
     }
   },
-  async searchProducts(name) {
-    try {
-      let result = await product.find({
-        name: new RegExp(name, "i"),
-      });
-      return result;
-    } catch (e) {
-      console.log(e.message);
-      throw new Error(`Unable to retrieve records for ${name}`);
-    }
-  },
-  // async addReview(reviewData) {
-  //   const newReview = new review(reviewData);
-
-  //   const savedReview = await newReview.save();
-  //   return savedReview;
-  // },
-
-  // async getReviewsByProductId(productId) {
-  //   const reviews = await Review.find({ product: productId }).populate(
-  //     "user",
-  //     "username"
-  //   );
-  //   return reviews;
-  // },
 };
 
 module.exports = db;
