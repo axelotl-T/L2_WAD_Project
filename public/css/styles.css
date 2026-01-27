@@ -1,4 +1,37 @@
 /* General Styles */
+.hidden {
+  display: none;
+}
+
+/* Cart Styles */
+.qty-btn {
+  padding: 2px 8px;
+  font-weight: bold;
+  cursor: pointer;
+}
+.qty-val {
+  margin: 0 10px;
+  font-weight: bold;
+}
+
+/* Review Styles */
+.reviews-container {
+  background: #f9f9f9;
+  padding: 10px;
+  margin-top: 10px;
+  border-radius: 5px;
+  display: none;
+}
+.admin-review-item {
+  border-bottom: 1px solid #ddd;
+  padding: 8px 0;
+  font-size: 0.9em;
+}
+.shop-review-item {
+  border-bottom: 1px solid #eee;
+  padding: 5px 0;
+  font-size: 0.9em;
+}
 body {
   font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
   padding: 20px;
