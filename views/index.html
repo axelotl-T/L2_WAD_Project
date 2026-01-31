@@ -31,6 +31,37 @@
         </div>
       </div>
 
+      <div
+        style="
+          background: #f8f9fa;
+          padding: 15px;
+          border-radius: 8px;
+          margin-bottom: 20px;
+          border: 1px solid #dee2e6;
+          display: flex;
+          gap: 10px;
+          flex-wrap: wrap;
+        "
+      >
+        <div style="flex-grow: 1; display: flex; gap: 5px">
+          <input
+            type="text"
+            id="searchInput"
+            placeholder="Search products..."
+            style="margin: 0; flex-grow: 1"
+          />
+          <button class="btn btn-secondary" onclick="handleSearch()">
+            Search
+          </button>
+        </div>
+
+        <div style="min-width: 200px">
+          <select id="categoryFilter" style="margin: 0; height: 100%">
+            <option value="All">All Categories</option>
+          </select>
+        </div>
+      </div>
+
       <h3>Products</h3>
       <div id="shop-container" class="shop-grid"></div>
     </div>

@@ -282,5 +282,13 @@ router.get("/api/reviews", function (req, res) {
       res.status(500).json({ error: err.message });
     });
 });
+// NEW: Search Product by Name
+router.post("/api/products/search", function (req, res) {
+  let name = req.body.name; // Expecting { "name": "Chicken" }
+
+  db.searchProducts(name)
+    .then((results) => res.status(200).json(results))
+    .catch((err) => res.status(500).json({ error: err.message }));
+});
 
 module.exports = router;

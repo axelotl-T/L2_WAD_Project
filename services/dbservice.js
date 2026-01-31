@@ -227,6 +227,10 @@ let db = {
       .populate("user", "username")
       .populate("product", "name");
   },
+  async searchProducts(keyword) {
+    // Regex for partial match, case-insensitive
+    return await product.find({ name: { $regex: keyword, $options: "i" } });
+  },
 };
 
 module.exports = db;

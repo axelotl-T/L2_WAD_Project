@@ -1,16 +1,69 @@
 $(document).ready(function () {
-  loadShopProducts();
+  loadShopProducts(); // Load all by default
+  loadCategoriesForFilter(); // NEW: Populate the dropdown
+
+  // Bind Category Change Event
+  $("#categoryFilter").change(function () {
+    let selectedCat = $(this).val();
+    loadShopProducts(selectedCat);
+  });
 });
 
-async function loadShopProducts() {
+// --- 1. LOAD PRODUCTS (Handles Filter too) ---
+async function loadShopProducts(category = "All") {
   try {
-    let res = await fetch("/api/products");
+    // If specific category is chosen, append query param
+    let url = "/api/products";
+    if (category && category !== "All") {
+      url += `?category=${encodeURIComponent(category)}`;
+    }
+
+    let res = await fetch(url);
     let products = await res.json();
 
-    products.forEach((p) => {
-      // 1. We keep the currency logic (price-display)
-      // 2. We add the Reviews Section (hidden by default)
-      $("#shop-container").append(`
+    renderProducts(products);
+  } catch (e) {
+    console.log(e);
+  }
+}
+
+// --- 2. HANDLE SEARCH ---
+async function handleSearch() {
+  let keyword = $("#searchInput").val();
+
+  if (!keyword || keyword.trim() === "") {
+    loadShopProducts(); // If empty, reload all
+    return;
+  }
+
+  try {
+    let res = await fetch("/api/products/search", {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({ name: keyword }),
+    });
+
+    let products = await res.json();
+    renderProducts(products);
+
+    // Reset category dropdown to "All" since search overrides it
+    $("#categoryFilter").val("All");
+  } catch (e) {
+    console.log("Search error", e);
+  }
+}
+
+// --- 3. HELPER: RENDER TO HTML ---
+function renderProducts(products) {
+  $("#shop-container").empty();
+
+  if (products.length === 0) {
+    $("#shop-container").html("<p>No products found.</p>");
+    return;
+  }
+
+  products.forEach((p) => {
+    $("#shop-container").append(`
                 <div class="shop-card" style="border:1px solid #ddd; padding:10px; margin:5px; background:white;">
                     <h4>${p.name}</h4>
                     <p>${p.description}</p>
@@ -23,39 +76,48 @@ async function loadShopProducts() {
                     <button class="btn btn-info" onclick="toggleReviews('${p._id}')">Reviews</button>
 
                     <div id="reviews-${p._id}" class="reviews-container" style="display:none; text-align:left; margin-top:10px; border-top:1px solid #eee; padding-top:10px;">
-                        </div>
+                    </div>
                 </div>
             `);
-    });
+  });
 
-    // Initial currency update
-    if (typeof updateAllPrices === "function") {
-      updateAllPrices();
-    }
-  } catch (e) {
-    console.log(e);
+  // Initial currency update (if function exists from index.js)
+  if (typeof updateAllPrices === "function") {
+    updateAllPrices();
   }
 }
 
-// --- REVIEW LOGIC ---
+// --- 4. LOAD CATEGORIES DROPDOWN ---
+async function loadCategoriesForFilter() {
+  try {
+    let res = await fetch("/api/categories");
+    let cats = await res.json();
 
+    cats.forEach((c) => {
+      $("#categoryFilter").append(
+        `<option value="${c.name}">${c.name}</option>`,
+      );
+    });
+  } catch (e) {
+    console.log("Error loading categories", e);
+  }
+}
+
+// --- 5. REVIEW LOGIC (Existing) ---
 async function toggleReviews(productId) {
   let container = $(`#reviews-${productId}`);
 
-  // Toggle Hide/Show
   if (container.is(":visible")) {
     container.slideUp();
     return;
   }
 
-  // Fetch Reviews from Backend
   try {
     let res = await fetch(`/api/products/${productId}/reviews`);
     let reviews = await res.json();
 
     container.empty();
 
-    // 1. Show "Add Review" Form (Only if Logged In)
     if (authToken) {
       container.append(`
                 <div class="review-form" style="margin-bottom:10px; padding-bottom:10px; border-bottom:1px dashed #ccc;">
@@ -77,13 +139,11 @@ async function toggleReviews(productId) {
       );
     }
 
-    // 2. List Existing Reviews
     if (reviews.length === 0) {
       container.append("<p>No reviews yet.</p>");
     } else {
       reviews.forEach((r) => {
         let deleteBtn = "";
-        // Show delete button ONLY if the logged-in user owns this review
         if (authToken && r.user && r.user.username === currentUser) {
           deleteBtn = `<button class="btn btn-danger btn-sm" style="float:right; padding:0 5px;" onclick="deleteReview('${r._id}', '${productId}')">x</button>`;
         }
@@ -126,7 +186,6 @@ async function postReview(productId) {
 
     if (res.ok) {
       alert("Review submitted!");
-      // Refresh the reviews section
       $(`#reviews-${productId}`).hide();
       toggleReviews(productId);
     } else {
@@ -151,7 +210,6 @@ async function deleteReview(reviewId, productId) {
 
     if (res.ok) {
       alert("Review deleted.");
-      // Refresh the reviews section
       $(`#reviews-${productId}`).hide();
       toggleReviews(productId);
     } else {
