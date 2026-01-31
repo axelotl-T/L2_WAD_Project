@@ -99,7 +99,7 @@ router.get("/api/user", authenticationCheck, function (req, res) {
 // PRODUCT ROUTES
 // ---------------------------------------------------
 
-// Get All Products (With Optional Category Filter)
+//KZ: Get All Products (With Optional Category Filter)
 router.get("/api/products", function (req, res) {
   let category = req.query.category;
 
@@ -254,19 +254,21 @@ router.get("/api/rates", function (req, res) {
     });
 });
 
+// --- UPDATED CHECKOUT ROUTE ---
 router.post("/api/checkout", authenticationCheck, function (req, res) {
   let cart = req.body.cart; // Expecting array of {id, name, price, qty}
+  let userId = res.locals.userId; // <--- NEW: Get the User ID from the token
 
   if (!cart || cart.length === 0) {
     return res.status(400).json({ error: "Cart is empty" });
   }
 
-  db.processCheckout(cart)
+  // Pass userId to the processCheckout function
+  db.processCheckout(userId, cart)
     .then(function (result) {
       res.status(200).json(result);
     })
     .catch(function (err) {
-      // Return 400 for bad requests (e.g. out of stock)
       res.status(400).json({ error: err.message });
     });
 });

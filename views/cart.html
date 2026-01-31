@@ -10,6 +10,13 @@
     <div class="container">
       <div class="header-bar">
         <h2>Shopping Cart</h2>
+
+        <div style="margin-left: auto; margin-right: 10px">
+          <select id="currencySelect" style="padding: 5px; border-radius: 5px">
+            <option value="SGD">SGD</option>
+          </select>
+        </div>
+
         <div class="user-buttons">
           <a href="/index.html" class="btn btn-success">Back to Shop</a>
           <button class="btn btn-danger" id="btnLogout">Logout</button>
@@ -17,8 +24,27 @@
       </div>
 
       <div id="cart-items"></div>
+
       <hr />
-      <h3>Total: $<span id="total-price">0.00</span></h3>
+
+      <div
+        id="shipping-info"
+        class="card"
+        style="display: none; background: #f0f8ff; border: 1px solid #b6d4fe"
+      >
+        <h3>Shipping Details</h3>
+        <p><strong>Name:</strong> <span id="ship-name"></span></p>
+        <p><strong>Email:</strong> <span id="ship-email"></span></p>
+        <p><strong>Postal Code:</strong> <span id="ship-postal"></span></p>
+        <p><strong>Address:</strong> <span id="ship-address"></span></p>
+      </div>
+
+      <h3>
+        Total:
+        <span id="total-price" class="price-display" data-val="0"
+          >SGD 0.00</span
+        >
+      </h3>
       <button class="btn btn-success" id="btnCheckout">Checkout</button>
     </div>
 

@@ -7,6 +7,13 @@ const bcrypt = require("bcryptjs");
 const jwt = require("jsonwebtoken");
 const axios = require("axios");
 
+// --- NEW: SendGrid Import ---
+const sgMail = require("@sendgrid/mail");
+// TODO: Replace this string with your actual API Key from SendGrid
+sgMail.setApiKey(
+  "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",
+);
+
 const JWT_SECRET = "secret_key_wad_project";
 
 let db = {
@@ -75,25 +82,21 @@ let db = {
       { expiresIn: "1h" },
     );
 
-    // NEW: Save token to the user document in MongoDB
     foundUser.token = token;
     await foundUser.save();
 
     return { token, user: foundUser };
   },
 
-  // NEW: Logout function (removes token from DB)
   async logoutUser(id) {
     return await user.findByIdAndUpdate(id, { token: null });
   },
 
-  // NEW: Check if token matches DB (Optional Security Step)
   async checkUserToken(id, token) {
     const u = await user.findById(id);
     return u && u.token === token;
   },
 
-  // NEW: Get User by ID (for Checkout)
   async getUserById(id) {
     return await user.findById(id).select("-password");
   },
@@ -155,9 +158,11 @@ let db = {
     }
   },
 
-  // --- CHECKOUT LOGIC ---
-  async processCheckout(cartItems) {
+  // --- CHECKOUT LOGIC WITH EMAIL ---
+  async processCheckout(userId, cartItems) {
     // Step 1: Check if ALL items have enough stock first
+    let totalCost = 0;
+
     for (let item of cartItems) {
       let productDoc = await product.findById(item.id);
       if (!productDoc) {
@@ -168,6 +173,7 @@ let db = {
           `Insufficient stock for '${item.name}'. Available: ${productDoc.stock}`,
         );
       }
+      totalCost += productDoc.price * item.qty;
     }
 
     // Step 2: If all good, deduct stock
@@ -177,7 +183,40 @@ let db = {
       await productDoc.save();
     }
 
-    return { message: "Checkout successful, stock updated." };
+    // Step 3: Fetch User to get Email
+    const currentUser = await user.findById(userId);
+
+    if (currentUser) {
+      // Step 4: Construct Email
+      const emailContent = `
+            <h1>Order Confirmed!</h1>
+            <p>Hi ${currentUser.username},</p>
+            <p>Thank you for shopping with SwiftShop. Here is your order summary:</p>
+            <ul>
+                ${cartItems.map((item) => `<li>${item.name} x ${item.qty} - $${item.price}</li>`).join("")}
+            </ul>
+            <h3>Total Paid: SGD ${totalCost.toFixed(2)}</h3>
+            <p>We will ship your items to:</p>
+            <p>${currentUser.address.streetName}, ${currentUser.address.building}, ${currentUser.address.postalCode}</p>
+        `;
+
+      const msg = {
+        to: currentUser.email, // User's email from DB
+        from: "axeltan16@gmail.com", // REPLACE WITH YOUR VERIFIED SENDER EMAIL
+        subject: "SwiftShop Order Confirmation",
+        html: emailContent,
+      };
+
+      try {
+        await sgMail.send(msg);
+        console.log("Email sent to " + currentUser.email);
+      } catch (error) {
+        console.error("SendGrid Error:", error);
+        // We do NOT throw error here, because checkout was successful
+      }
+    }
+
+    return { message: "Checkout successful, stock updated & email sent." };
   },
 };
 
