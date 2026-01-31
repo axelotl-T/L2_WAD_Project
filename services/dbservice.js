@@ -218,6 +218,15 @@ let db = {
 
     return { message: "Checkout successful, stock updated & email sent." };
   },
+  // ... existing review functions ...
+
+  // NEW: Get ALL reviews for Admin Dashboard
+  async getAllReviews() {
+    return await review
+      .find()
+      .populate("user", "username")
+      .populate("product", "name");
+  },
 };
 
 module.exports = db;

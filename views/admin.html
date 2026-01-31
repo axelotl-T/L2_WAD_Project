@@ -16,6 +16,7 @@
         </div>
       </div>
 
+      <h3>Manage Products</h3>
       <button
         class="btn btn-primary"
         onclick="$('#product-form').slideToggle()"
@@ -35,10 +36,18 @@
         <input type="number" id="prodPrice" placeholder="Price" />
         <input type="number" id="prodStock" placeholder="Stock" />
         <select id="prodCat"></select>
-        <button class="btn btn-success" id="btnSave">Save</button>
+        <button class="btn btn-success" id="btnSave">Save Product</button>
       </div>
 
-      <div id="admin-products-list" style="margin-top: 20px"></div>
+      <div
+        id="admin-products-list"
+        style="margin-top: 20px; margin-bottom: 40px"
+      ></div>
+
+      <hr />
+
+      <h3>Manage Reviews</h3>
+      <div id="admin-reviews-list"></div>
     </div>
 
     <script src="/js/index.js"></script>

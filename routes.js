@@ -272,5 +272,15 @@ router.post("/api/checkout", authenticationCheck, function (req, res) {
       res.status(400).json({ error: err.message });
     });
 });
+// NEW: Get All Reviews (For Admin)
+router.get("/api/reviews", function (req, res) {
+  db.getAllReviews()
+    .then(function (results) {
+      res.status(200).json(results);
+    })
+    .catch(function (err) {
+      res.status(500).json({ error: err.message });
+    });
+});
 
 module.exports = router;
