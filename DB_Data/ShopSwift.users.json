@@ -1,0 +1,58 @@
+[{
+  "_id": {
+    "$oid": "697826020a316c1e234b5d0b"
+  },
+  "username": "Axel Tan",
+  "email": "axeltan16@gmail.com",
+  "password": "$2b$10$3jRM1RJGmQZxe8En/lQhyuqkyDrRbuPhAelEgg/ox9rGxYjyBgPaW",
+  "address": {
+    "postalCode": "544204",
+    "streetName": "COMPASSVALE DRIVE",
+    "building": "NIL"
+  },
+  "__v": 0,
+  "token": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjY5NzgyNjAyMGEzMTZjMWUyMzRiNWQwYiIsInVzZXJuYW1lIjoiQXhlbCBUYW4iLCJpYXQiOjE3Njk4Njk1NDMsImV4cCI6MTc2OTg3MzE0M30.inB_M1zOz1rILgmOsSXxnqUQ6seAClDjAtqT3o5D_jw"
+},
+{
+  "_id": {
+    "$oid": "697830cd376967ef0521367e"
+  },
+  "username": "Axiow Tan",
+  "email": "Axiowtan@gmail.com",
+  "password": "$2b$10$KuyjaJ1sKMxP/axF9yNaeOdhSd.Kaiasi5Bmv9rDnFnF3Vh1YCzhu",
+  "address": {
+    "postalCode": "560647",
+    "streetName": "ANG MO KIO AVENUE 6",
+    "building": "ANG MO KIO 61"
+  },
+  "__v": 0,
+  "token": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjY5NzgzMGNkMzc2OTY3ZWYwNTIxMzY3ZSIsInVzZXJuYW1lIjoiQXhpb3cgVGFuIiwiaWF0IjoxNzY5NDg0NTE2LCJleHAiOjE3Njk0ODgxMTZ9.eJAL0aiS2a1xrXL6ggV2Op5C7t_49PITEUVVW9zl_0Q"
+},
+{
+  "_id": {
+    "$oid": "6978321e376967ef052136d4"
+  },
+  "username": "NYP",
+  "email": "123@gmail.com",
+  "password": "$2b$10$ZPD7jwLaAJ88DpPXODxszej4CGd5xu/kZWA7SprKbbY37UpvMiGbq",
+  "address": {
+    "postalCode": "569830",
+    "streetName": "ANG MO KIO AVENUE 8",
+    "building": "NANYANG POLYTECHNIC (AUDITORIUM)"
+  },
+  "__v": 0,
+  "token": null
+},
+{
+  "_id": {
+    "$oid": "697e1147ea8a5d8c4781f004"
+  },
+  "username": "Axelotl",
+  "email": "Axelotl@email.com",
+  "password": "$2b$10$Z9YVCR02bTAnLshzIP5.HerWTpXXHqge.l/Uab5KqGPzLpgKpgW2S",
+  "address": {
+    "streetName": "",
+    "building": ""
+  },
+  "__v": 0
+}]

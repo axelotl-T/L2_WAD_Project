@@ -1,0 +1,56 @@
+[{
+  "_id": {
+    "$oid": "697817719bbc77f0bf3004b6"
+  },
+  "rating": 5,
+  "comment": "so tasty",
+  "user": {
+    "$oid": "697814969ac2c6f240c6fb2c"
+  },
+  "product": {
+    "$oid": "693685dd81dd591b6772c8f1"
+  },
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "6978181f9bbc77f0bf3004c2"
+  },
+  "rating": 4,
+  "comment": "tasty",
+  "user": {
+    "$oid": "697814969ac2c6f240c6fb2c"
+  },
+  "product": {
+    "$oid": "693685dd81dd591b6772c8f1"
+  },
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "69781935cb8465e090f0bf15"
+  },
+  "rating": 3,
+  "comment": "yes",
+  "user": {
+    "$oid": "697814969ac2c6f240c6fb2c"
+  },
+  "product": {
+    "$oid": "6978167a9bbc77f0bf3004a0"
+  },
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "6978315e376967ef052136bc"
+  },
+  "rating": 3,
+  "comment": "Why So Expensive!!!!",
+  "user": {
+    "$oid": "697830cd376967ef0521367e"
+  },
+  "product": {
+    "$oid": "6978310f376967ef05213688"
+  },
+  "__v": 0
+}]

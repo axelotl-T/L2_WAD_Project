@@ -1,0 +1,22 @@
+[{
+  "_id": {
+    "$oid": "693685dd81dd591b6772c8f1"
+  },
+  "name": "Chicken",
+  "description": "This is chicken",
+  "price": 30,
+  "stock": 65,
+  "category": "Food",
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "6978310f376967ef05213688"
+  },
+  "name": "Coke",
+  "description": "Just a drink",
+  "price": 3000,
+  "stock": 1,
+  "category": "Food",
+  "__v": 0
+}]
