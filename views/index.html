@@ -2,169 +2,33 @@
 <html lang="en">
   <head>
     <meta charset="UTF-8" />
-    <title>SwiftShop</title>
+    <title>Shop - SwiftShop</title>
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
     <link rel="stylesheet" href="/css/styles.css" />
-    <style>
-      .hidden {
-        display: none;
-      }
-      .qty-btn {
-        padding: 2px 8px;
-        font-weight: bold;
-        cursor: pointer;
-      }
-      .qty-val {
-        margin: 0 10px;
-        font-weight: bold;
-      }
-      .reviews-container {
-        background: #f9f9f9;
-        padding: 10px;
-        margin-top: 10px;
-        border-radius: 5px;
-        display: none;
-      }
-    </style>
   </head>
   <body>
     <div class="container">
       <div class="header-bar">
         <h2>SwiftShop</h2>
-        <div id="nav-buttons" class="hidden">
-          <span style="margin-right: 15px"
-            >Hi, <b id="displayUsername"></b
-          ></span>
-          <button class="btn btn-info" onclick="switchView('dashboard')">
-            Admin Dashboard
-          </button>
-          <button class="btn btn-success" onclick="switchView('shop')">
-            Shop
-          </button>
-          <button class="btn btn-warning" onclick="switchView('cart')">
-            Cart (<span id="cart-count">0</span>)
-          </button>
-          <button class="btn btn-danger" onclick="logout()">Logout</button>
+        <div class="auth-buttons">
+          <a href="/login.html" class="btn btn-primary">Login</a>
+          <a href="/register.html" class="btn btn-secondary">Register</a>
         </div>
-      </div>
-
-      <div id="view-auth">
-        <div id="login-box">
-          <h3>Login</h3>
-          <input type="email" id="loginEmail" placeholder="Email" />
-          <input type="password" id="loginPass" placeholder="Password" />
-          <button class="btn btn-primary" id="btnLogin">Login</button>
-          <button
-            class="btn btn-secondary"
-            onclick="
-              $('#login-box').hide();
-              $('#reg-box').show();
-            "
+        <div class="user-buttons" style="display: none">
+          <span>Hi, <b id="displayUsername"></b></span>
+          <a href="/admin.html" class="btn btn-info">Admin</a>
+          <a href="/cart.html" class="btn btn-warning"
+            >Cart (<span id="cart-count">0</span>)</a
           >
-            Register
-          </button>
-        </div>
-        <div id="reg-box" class="hidden">
-          <h3>Register</h3>
-          <input type="text" id="regUser" placeholder="Username" />
-          <input type="email" id="regEmail" placeholder="Email" />
-          <input type="password" id="regPass" placeholder="Password" />
-          <input type="text" id="regPostal" placeholder="Postal Code (SG)" />
-          <button class="btn btn-success" id="btnRegister">Sign Up</button>
-          <button
-            class="btn btn-secondary"
-            onclick="
-              $('#reg-box').hide();
-              $('#login-box').show();
-            "
-          >
-            Back
-          </button>
+          <button class="btn btn-danger" id="btnLogout">Logout</button>
         </div>
       </div>
 
-      <div id="view-dashboard" class="hidden">
-        <h3>Admin Dashboard</h3>
-        <button
-          class="btn btn-primary"
-          onclick="$('#product-form').slideToggle()"
-        >
-          + Add Product
-        </button>
-        <div
-          id="product-form"
-          class="card hidden"
-          style="margin-top: 10px; background: #f9f9f9"
-        >
-          <h4>Add/Edit Product</h4>
-          <input type="hidden" id="prodId" />
-          <input type="text" id="prodName" placeholder="Product Name" />
-          <input type="text" id="prodDesc" placeholder="Description" />
-          <input type="number" id="prodPrice" placeholder="Price" />
-          <input type="number" id="prodStock" placeholder="Stock" />
-          <label>Category:</label>
-          <select id="prodCat"></select>
-          <button class="btn btn-success" onclick="saveProduct()">Save</button>
-          <button
-            class="btn btn-secondary"
-            onclick="$('#product-form').slideUp()"
-          >
-            Cancel
-          </button>
-        </div>
-        <div id="admin-products-list" style="margin-top: 20px"></div>
-      </div>
-
-      <div id="view-shop" class="hidden">
-        <div
-          style="
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-          "
-        >
-          <h3>Shop Products</h3>
-          <div>
-            <label>Filter by:</label>
-            <select id="shopFilter" onchange="loadShopProducts()">
-              <option value="All">All Categories</option>
-            </select>
-          </div>
-        </div>
-        <hr />
-        <div class="shop-grid" id="shop-container"></div>
-      </div>
-
-      <div id="view-cart" class="hidden">
-        <h3>Checkout</h3>
-
-        <div class="card" style="background: #fff3cd; border-color: #ffeeba">
-          <h4>Shipping Information</h4>
-          <p><b>Name:</b> <span id="checkout-name">Loading...</span></p>
-          <p><b>Email:</b> <span id="checkout-email">...</span></p>
-          <p><b>Address:</b> <span id="checkout-address">...</span></p>
-        </div>
-
-        <h3>Shopping Cart</h3>
-        <div id="cart-items-container"></div>
-        <hr />
-        <div class="total-section">
-          Total (SGD): $<span id="cart-total-sgd">0.00</span>
-        </div>
-        <div class="card" style="background:#f0f8ff; margin-top:20px;">
-            <h4>Payment</h4>
-            <label>Currency:</label>
-            <select id="currency-select" onchange="updateTotalCurrency()">
-                <option value="SGD">SGD</option>
-            </select>
-            <h3>Final Total: <span id="final-total">0.00</span> <span id="currency-label">SGD</span></h3>
-            
-            <button class="btn btn-success" onclick="checkout()">Confirm Payment</button>
-        </div>
+      <h3>Products</h3>
+      <div id="shop-container" class="shop-grid"></div>
     </div>
-</div>
-      </div>
-    </div>
-<script src="/js/index.js"></script>
+
+    <script src="/js/index.js"></script>
+    <script src="/js/shop.js"></script>
   </body>
 </html>

@@ -22,7 +22,6 @@ $(document).ready(function () {
 });
 
 // --- SHARED CART LOGIC ---
-// We use localStorage so the cart persists when moving between pages
 function getCart() {
   return JSON.parse(localStorage.getItem("cart")) || [];
 }
@@ -33,6 +32,13 @@ function saveCart(cart) {
 }
 
 function addToCart(id, name, price) {
+  // --- NEW: Check if User is Logged In ---
+  if (!authToken) {
+    alert("Please login to add items to your cart.");
+    window.location.href = "/login.html"; // Redirect to Login
+    return;
+  }
+
   let cart = getCart();
   let existingItem = cart.find((item) => item.id === id);
 

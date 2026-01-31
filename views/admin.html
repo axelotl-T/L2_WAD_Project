@@ -1,0 +1,47 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <title>Admin - SwiftShop</title>
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <link rel="stylesheet" href="/css/styles.css" />
+  </head>
+  <body>
+    <div class="container">
+      <div class="header-bar">
+        <h2>Admin Dashboard</h2>
+        <div class="user-buttons">
+          <a href="/index.html" class="btn btn-success">Back to Shop</a>
+          <button class="btn btn-danger" id="btnLogout">Logout</button>
+        </div>
+      </div>
+
+      <button
+        class="btn btn-primary"
+        onclick="$('#product-form').slideToggle()"
+      >
+        + Add Product
+      </button>
+
+      <div
+        id="product-form"
+        class="card hidden"
+        style="margin-top: 10px; display: none; background: #f9f9f9"
+      >
+        <h4>Add/Edit Product</h4>
+        <input type="hidden" id="prodId" />
+        <input type="text" id="prodName" placeholder="Product Name" />
+        <input type="text" id="prodDesc" placeholder="Description" />
+        <input type="number" id="prodPrice" placeholder="Price" />
+        <input type="number" id="prodStock" placeholder="Stock" />
+        <select id="prodCat"></select>
+        <button class="btn btn-success" id="btnSave">Save</button>
+      </div>
+
+      <div id="admin-products-list" style="margin-top: 20px"></div>
+    </div>
+
+    <script src="/js/index.js"></script>
+    <script src="/js/admin.js"></script>
+  </body>
+</html>
