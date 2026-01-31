@@ -4,9 +4,172 @@
     "name": "ShopSwift",
     "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
     "_exporter_id": "49809992",
-    "_collection_link": "https://axeltan16-2869277.postman.co/workspace/Axelotl's-Workspace~8f872524-b0c1-496d-8588-4c49cac99143/collection/49809992-c5b5160d-6d0b-4c67-a026-3cd92c46fe36?action=share&source=collection_link&creator=49809992"
+    "_collection_link": "https://go.postman.co/collection/49809992-c5b5160d-6d0b-4c67-a026-3cd92c46fe36?source=collection_link"
   },
   "item": [
+    {
+      "name": "Register",
+      "request": {
+        "method": "POST",
+        "header": [],
+        "body": {
+          "mode": "urlencoded",
+          "urlencoded": [
+            {
+              "key": "username",
+              "value": "Axelotl",
+              "type": "text",
+              "uuid": "440f03bf-e695-49e8-824a-6de2ec6bea61"
+            },
+            {
+              "key": "email",
+              "value": "Axelotl@email.com",
+              "type": "text",
+              "uuid": "d79e1930-e970-4783-a51a-b59c08c60e0e"
+            },
+            {
+              "key": "password",
+              "value": "Skyray16",
+              "type": "text",
+              "uuid": "6b22be12-5abf-4bb9-8854-724df99fedd0"
+            },
+            {
+              "key": "postalcode",
+              "value": "543265",
+              "type": "text",
+              "uuid": "845eb8aa-d94f-4c12-ad34-7c7a69822d61"
+            }
+          ]
+        },
+        "url": {
+          "raw": "localhost:3000/api/register",
+          "host": [
+            "localhost"
+          ],
+          "port": "3000",
+          "path": [
+            "api",
+            "register"
+          ]
+        }
+      },
+      "response": []
+    },
+    {
+      "name": "Login",
+      "request": {
+        "method": "POST",
+        "header": [],
+        "body": {
+          "mode": "urlencoded",
+          "urlencoded": [
+            {
+              "key": "email",
+              "value": "axeltan16@gmail.com",
+              "type": "text",
+              "uuid": "440f03bf-e695-49e8-824a-6de2ec6bea61"
+            },
+            {
+              "key": "password",
+              "value": "Skyray16",
+              "type": "text",
+              "uuid": "d79e1930-e970-4783-a51a-b59c08c60e0e"
+            }
+          ]
+        },
+        "url": {
+          "raw": "localhost:3000/api/login",
+          "host": [
+            "localhost"
+          ],
+          "port": "3000",
+          "path": [
+            "api",
+            "login"
+          ]
+        }
+      },
+      "response": []
+    },
+    {
+      "name": "UserProfile",
+      "request": {
+        "method": "GET",
+        "header": [
+          {
+            "key": "Authorization",
+            "value": "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjY5NzgyNjAyMGEzMTZjMWUyMzRiNWQwYiIsInVzZXJuYW1lIjoiQXhlbCBUYW4iLCJpYXQiOjE3Njk4NjUzMjIsImV4cCI6MTc2OTg2ODkyMn0.qAi691vNY_T0z-fgn2bPV_EOQm_W1qKMcqvbRoZl_wI",
+            "type": "text"
+          }
+        ],
+        "url": {
+          "raw": "localhost:3000/api/user",
+          "host": [
+            "localhost"
+          ],
+          "port": "3000",
+          "path": [
+            "api",
+            "user"
+          ]
+        }
+      },
+      "response": []
+    },
+    {
+      "name": "Logout",
+      "request": {
+        "method": "POST",
+        "header": [
+          {
+            "key": "Authorization",
+            "value": "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjY5NzgyNjAyMGEzMTZjMWUyMzRiNWQwYiIsInVzZXJuYW1lIjoiQXhlbCBUYW4iLCJpYXQiOjE3Njk4NjUzMjIsImV4cCI6MTc2OTg2ODkyMn0.qAi691vNY_T0z-fgn2bPV_EOQm_W1qKMcqvbRoZl_wI",
+            "type": "text"
+          }
+        ],
+        "body": {
+          "mode": "urlencoded",
+          "urlencoded": [
+            {
+              "key": "id",
+              "value": "693685dd81dd591b6772c8f1",
+              "type": "text",
+              "uuid": "93ed8c4b-5936-420e-b47b-8bfed345f77e"
+            },
+            {
+              "key": "name",
+              "value": "Chicken",
+              "type": "text",
+              "uuid": "eb40d83e-ae9c-4a63-9576-c894baf46662"
+            },
+            {
+              "key": "price",
+              "value": "30",
+              "type": "text",
+              "uuid": "723a6bfd-52bb-41c1-adc4-e37c4c71f1ba"
+            },
+            {
+              "key": "qty",
+              "value": "2",
+              "type": "text",
+              "uuid": "54220370-d7d1-4e51-85ea-8ef33d33ac99"
+            }
+          ]
+        },
+        "url": {
+          "raw": "localhost:3000/api/logout",
+          "host": [
+            "localhost"
+          ],
+          "port": "3000",
+          "path": [
+            "api",
+            "logout"
+          ]
+        }
+      },
+      "response": []
+    },
     {
       "name": "Get all product",
       "request": {
@@ -14,9 +177,14 @@
         "header": [],
         "url": {
           "raw": "localhost:3000/api/products",
-          "host": ["localhost"],
+          "host": [
+            "localhost"
+          ],
           "port": "3000",
-          "path": ["api", "products"]
+          "path": [
+            "api",
+            "products"
+          ]
         }
       },
       "response": []
@@ -27,10 +195,16 @@
         "method": "GET",
         "header": [],
         "url": {
-          "raw": "localhost:3000/api/products/69368504531f88b11056f5eb",
-          "host": ["localhost"],
+          "raw": "localhost:3000/api/products/693685dd81dd591b6772c8f1",
+          "host": [
+            "localhost"
+          ],
           "port": "3000",
-          "path": ["api", "products", "69368504531f88b11056f5eb"]
+          "path": [
+            "api",
+            "products",
+            "693685dd81dd591b6772c8f1"
+          ]
         }
       },
       "response": []
@@ -45,36 +219,46 @@
           "urlencoded": [
             {
               "key": "name",
-              "value": "Chicken",
-              "type": "text"
+              "value": "Iphone",
+              "type": "text",
+              "uuid": "5d874351-e831-4ab0-9996-63c4d0d5eb5e"
             },
             {
               "key": "price",
               "value": "50",
-              "type": "text"
+              "type": "text",
+              "uuid": "b59e64c2-1e23-43cf-a3ac-c11b35159696"
             },
             {
               "key": "stock",
               "value": "20",
-              "type": "text"
+              "type": "text",
+              "uuid": "71d11e6b-16f8-4e89-9303-2a8f31fdfdb1"
             },
             {
               "key": "category",
-              "value": "Food",
-              "type": "text"
+              "value": "Devices",
+              "type": "text",
+              "uuid": "3d346d96-c10c-456b-8b49-76ca71fac936"
             },
             {
               "key": "description",
-              "value": "This is chicken",
-              "type": "text"
+              "value": "This is an Iphone",
+              "type": "text",
+              "uuid": "6dce5682-1c05-4255-9a85-82f166778899"
             }
           ]
         },
         "url": {
           "raw": "localhost:3000/api/products",
-          "host": ["localhost"],
+          "host": [
+            "localhost"
+          ],
           "port": "3000",
-          "path": ["api", "products"]
+          "path": [
+            "api",
+            "products"
+          ]
         }
       },
       "response": []
@@ -90,39 +274,257 @@
             {
               "key": "name",
               "value": "cheese",
-              "type": "text"
+              "type": "text",
+              "uuid": "5e7d7d1f-e630-47d7-9019-7d5da7e49da7"
             }
           ]
         },
         "url": {
-          "raw": "localhost:3000/api/products/69368504531f88b11056f5eb",
-          "host": ["localhost"],
+          "raw": "localhost:3000/api/products/693685dd81dd591b6772c8f1",
+          "host": [
+            "localhost"
+          ],
           "port": "3000",
-          "path": ["api", "products", "69368504531f88b11056f5eb"]
+          "path": [
+            "api",
+            "products",
+            "693685dd81dd591b6772c8f1"
+          ]
         }
       },
       "response": []
     },
     {
-      "name": "Delete product by id",
+      "name": "DeleteProduct",
       "request": {
         "method": "DELETE",
         "header": [],
-        "body": {
-          "mode": "urlencoded",
-          "urlencoded": []
-        },
         "url": {
-          "raw": "localhost:3000/api/products/69368504531f88b11056f5eb",
-          "host": ["localhost"],
+          "raw": "localhost:3000/api/products/693685dd81dd591b6772c8f1",
+          "host": [
+            "localhost"
+          ],
           "port": "3000",
-          "path": ["api", "products", "69368504531f88b11056f5eb"]
+          "path": [
+            "api",
+            "products",
+            "693685dd81dd591b6772c8f1"
+          ]
         }
       },
       "response": []
     },
     {
-      "name": "Search product",
+      "name": "GetReview",
+      "request": {
+        "method": "GET",
+        "header": [],
+        "url": {
+          "raw": "localhost:3000/api/products/693685dd81dd591b6772c8f1/reviews",
+          "host": [
+            "localhost"
+          ],
+          "port": "3000",
+          "path": [
+            "api",
+            "products",
+            "693685dd81dd591b6772c8f1",
+            "reviews"
+          ]
+        }
+      },
+      "response": []
+    },
+    {
+      "name": "AddReviews",
+      "request": {
+        "method": "POST",
+        "header": [],
+        "body": {
+          "mode": "urlencoded",
+          "urlencoded": [
+            {
+              "key": "productId",
+              "value": "693685dd81dd591b6772c8f1",
+              "type": "text",
+              "uuid": "7e2c2c9d-d2ca-4407-ac2d-9055909c0637"
+            },
+            {
+              "key": "rating",
+              "value": "5",
+              "type": "text",
+              "uuid": "f57bf285-9841-48e8-852c-3e02f98ae45a"
+            },
+            {
+              "key": "comment",
+              "value": "AMAZING!!!",
+              "type": "text",
+              "uuid": "7ecb83d7-9fb4-40c9-98a0-930298d2ad7c"
+            }
+          ]
+        },
+        "url": {
+          "raw": "localhost:3000/api/reviews",
+          "host": [
+            "localhost"
+          ],
+          "port": "3000",
+          "path": [
+            "api",
+            "reviews"
+          ]
+        }
+      },
+      "response": []
+    },
+    {
+      "name": "UpdateReviews",
+      "request": {
+        "method": "PUT",
+        "header": [],
+        "body": {
+          "mode": "urlencoded",
+          "urlencoded": [
+            {
+              "key": "rating",
+              "value": "4",
+              "type": "text",
+              "uuid": "3898763e-77b4-4c47-a1b4-e7a2bdeaa941"
+            },
+            {
+              "key": "comment",
+              "value": "Not Bad",
+              "type": "text",
+              "uuid": "1aa8e6d5-9fbd-4045-be9e-6a8b96fa8c6f"
+            }
+          ]
+        },
+        "url": {
+          "raw": "localhost:3000/api/reviews/697817719bbc77f0bf3004b6",
+          "host": [
+            "localhost"
+          ],
+          "port": "3000",
+          "path": [
+            "api",
+            "reviews",
+            "697817719bbc77f0bf3004b6"
+          ]
+        }
+      },
+      "response": []
+    },
+    {
+      "name": "DeleteReview",
+      "request": {
+        "method": "DELETE",
+        "header": [],
+        "url": {
+          "raw": "localhost:3000/api/reviews/697817719bbc77f0bf3004b6",
+          "host": [
+            "localhost"
+          ],
+          "port": "3000",
+          "path": [
+            "api",
+            "reviews",
+            "697817719bbc77f0bf3004b6"
+          ]
+        }
+      },
+      "response": []
+    },
+    {
+      "name": "GetAllReviews",
+      "request": {
+        "method": "GET",
+        "header": [
+          {
+            "key": "Authorization",
+            "value": "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjY5NzgyNjAyMGEzMTZjMWUyMzRiNWQwYiIsInVzZXJuYW1lIjoiQXhlbCBUYW4iLCJpYXQiOjE3Njk4NjUzMjIsImV4cCI6MTc2OTg2ODkyMn0.qAi691vNY_T0z-fgn2bPV_EOQm_W1qKMcqvbRoZl_wI",
+            "type": "text"
+          }
+        ],
+        "url": {
+          "raw": "localhost:3000/api/reviews",
+          "host": [
+            "localhost"
+          ],
+          "port": "3000",
+          "path": [
+            "api",
+            "reviews"
+          ]
+        }
+      },
+      "response": []
+    },
+    {
+      "name": "CurrencyExchange",
+      "request": {
+        "method": "GET",
+        "header": [],
+        "url": {
+          "raw": "localhost:3000/api/rates",
+          "host": [
+            "localhost"
+          ],
+          "port": "3000",
+          "path": [
+            "api",
+            "rates"
+          ]
+        }
+      },
+      "response": []
+    },
+    {
+      "name": "GetCategories",
+      "request": {
+        "method": "GET",
+        "header": [],
+        "url": {
+          "raw": "localhost:3000/api/categories",
+          "host": [
+            "localhost"
+          ],
+          "port": "3000",
+          "path": [
+            "api",
+            "categories"
+          ]
+        }
+      },
+      "response": []
+    },
+    {
+      "name": "FilterByCategories",
+      "request": {
+        "method": "GET",
+        "header": [],
+        "url": {
+          "raw": "http://localhost:3000/api/products?category=Food",
+          "protocol": "http",
+          "host": [
+            "localhost"
+          ],
+          "port": "3000",
+          "path": [
+            "api",
+            "products"
+          ],
+          "query": [
+            {
+              "key": "category",
+              "value": "Food"
+            }
+          ]
+        }
+      },
+      "response": []
+    },
+    {
+      "name": "SearchProduct",
       "request": {
         "method": "POST",
         "header": [],
@@ -131,25 +533,79 @@
           "urlencoded": [
             {
               "key": "name",
-              "value": "Chicken",
-              "type": "text"
+              "value": "Coke",
+              "type": "text",
+              "uuid": "ad86489d-8ea4-4e67-8d5f-6070a24ef61c"
             }
           ]
         },
         "url": {
-          "raw": "localhost:3000/api/products/search",
-          "host": ["localhost"],
+          "raw": "http://localhost:3000/api/products/search",
+          "protocol": "http",
+          "host": [
+            "localhost"
+          ],
           "port": "3000",
-          "path": ["api", "products", "search"]
+          "path": [
+            "api",
+            "products",
+            "search"
+          ]
         }
       },
       "response": []
     },
     {
-      "name": "New Request",
+      "name": "Checkout",
       "request": {
-        "method": "GET",
-        "header": []
+        "method": "POST",
+        "header": [
+          {
+            "key": "Authorization",
+            "value": "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjY5NzgyNjAyMGEzMTZjMWUyMzRiNWQwYiIsInVzZXJuYW1lIjoiQXhlbCBUYW4iLCJpYXQiOjE3Njk4NjUzMjIsImV4cCI6MTc2OTg2ODkyMn0.qAi691vNY_T0z-fgn2bPV_EOQm_W1qKMcqvbRoZl_wI",
+            "type": "text"
+          }
+        ],
+        "body": {
+          "mode": "urlencoded",
+          "urlencoded": [
+            {
+              "key": "id",
+              "value": "693685dd81dd591b6772c8f1",
+              "type": "text",
+              "uuid": "93ed8c4b-5936-420e-b47b-8bfed345f77e"
+            },
+            {
+              "key": "name",
+              "value": "Chicken",
+              "type": "text",
+              "uuid": "eb40d83e-ae9c-4a63-9576-c894baf46662"
+            },
+            {
+              "key": "price",
+              "value": "30",
+              "type": "text",
+              "uuid": "723a6bfd-52bb-41c1-adc4-e37c4c71f1ba"
+            },
+            {
+              "key": "qty",
+              "value": "2",
+              "type": "text",
+              "uuid": "54220370-d7d1-4e51-85ea-8ef33d33ac99"
+            }
+          ]
+        },
+        "url": {
+          "raw": "localhost:3000/api/checkout",
+          "host": [
+            "localhost"
+          ],
+          "port": "3000",
+          "path": [
+            "api",
+            "checkout"
+          ]
+        }
       },
       "response": []
     }
