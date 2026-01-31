@@ -1,6 +1,4 @@
 // GLOBAL VARIABLES
-const authToken = localStorage.getItem("token");
-
 $(document).ready(function () {
   if (!authToken) {
     alert("Access Denied");
