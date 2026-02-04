@@ -11,7 +11,7 @@ const axios = require("axios");
 const sgMail = require("@sendgrid/mail");
 // TODO: Replace this string with your actual API Key from SendGrid
 sgMail.setApiKey(
-  "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",
+  "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",
 );
 
 const JWT_SECRET = "secret_key_wad_project";
